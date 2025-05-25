@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Business Loyalty System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <div class="logo">🎁BizRewards</div>
+                <div class="tagline">Smart Loyalty System for Local Businesses</div>
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="switchTab('dashboard')">📊 Dashboard</button>
+            <button class="nav-tab" onclick="switchTab('customers')">👥 Customers</button>
+            <button class="nav-tab" onclick="switchTab('checkin')">✅ Check-in</button>
+            <button class="nav-tab" onclick="switchTab('rewards')">🎁 Rewards</button>
+            <button class="nav-tab" onclick="switchTab('settings')">⚙️ Settings</button>
+        </div>
+
+        <div class="content">
+            <!-- Dashboard Tab -->
+            <div id="dashboard" class="tab-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalCustomers">20</div>
+                        <div class="stat-label">Total Customers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalVisits">10</div>
+                        <div class="stat-label">Total Visits</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="activeRewards">5</div>
+                        <div class="stat-label">Active Rewards</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="pointsIssued">5</div>
+                        <div class="stat-label">Points Issued</div>
+                    </div>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>Welcome to BizRewards!</strong> Start by adding your first customer or setting up your reward system. Track customer visits and reward loyalty automatically.
+                </div>
+            </div>
+
+            <!-- Customers Tab -->
+            <div id="customers" class="tab-content">
+                <div class="search-box">
+                    <input type="text" id="customerSearch" placeholder="Search customers by name or phone..." oninput="searchCustomers()">
+                </div>
+                
+                <div id="customersList">
+                    <div class="empty-state">
+                        <h3>No customers yet</h3>
+                        <p>Add your first customer using the check-in feature!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Check-in Tab -->
+            <div id="checkin" class="tab-content">
+                <div class="form-group">
+                    <label for="customerPhone">Customer Phone Number</label>
+                    <input type="tel" id="customerPhone" placeholder="254712345678" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="customerName">Customer Name</label>
+                        <input type="text" id="customerName" placeholder="Enter customer name">
+                    </div>
+                    <div class="form-group">
+                        <label for="visitPoints">Points for this Visit</label>
+                        <input type="number" id="visitPoints" value="10" min="1" max="100">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="visitNotes">Visit Notes (Optional)</label>
+                    <textarea id="visitNotes" rows="3" placeholder="e.g., Haircut and shave, Large pizza order, etc."></textarea>
+                </div>
+
+                <button class="btn" onclick="checkInCustomer()">Check-in Customer</button>
+
+                <div id="checkinMessage"></div>
+            </div>
+
+            <!-- Rewards Tab -->
+            <div id="rewards" class="tab-content">
+                <h3>Reward Configuration</h3>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pointsRequired">Points Required for Reward</label>
+                        <input type="number" id="pointsRequired" value="100" min="10" max="1000">
+                    </div>
+                    <div class="form-group">
+                        <label for="rewardDescription">Reward Description</label>
+                        <input type="text" id="rewardDescription" placeholder="e.g., Free haircut, 20% discount, Free meal">
+                    </div>
+                </div>
+
+                <button class="btn" onclick="updateRewardSettings()">Update Reward Settings</button>
+
+                <div id="rewardMessage"></div>
+
+                <div style="margin-top: 30px;">
+                    <h3>Quick Reward Actions</h3>
+                    <div class="form-group">
+                        <label for="rewardPhone">Customer Phone</label>
+                        <input type="tel" id="rewardPhone" placeholder="254712345678">
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn btn-secondary" onclick="redeemReward()">Redeem Reward</button>
+                        <button class="btn btn-secondary" onclick="addBonusPoints()">Add Bonus Points</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="settings" class="tab-content">
+                <h3>Business Settings</h3>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="businessName">Business Name</label>
+                        <input type="text" id="businessName" placeholder="Enter your business name">
+                    </div>
+                    <div class="form-group">
+                        <label for="businessType">Business Type</label>
+                        <select id="businessType">
+                            <option value="salon">Hair Salon</option>
+                            <option value="barbershop">Barbershop</option>
+                            <option value="restaurant">Restaurant</option>
+                            <option value="cafe">Cafe</option>
+                            <option value="spa">Spa</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="businessAddress">Business Address</label>
+                    <textarea id="businessAddress" rows="3" placeholder="Enter your business address"></textarea>
+                </div>
+
+                <button class="btn" onclick="saveBusinessSettings()">Save Settings</button>
+
+                <div id="settingsMessage"></div>
+
+                <div class="contact-info">
+                    <h3>Developer Contact</h3>
+                    <p>Built with ❤️ for local businesses in Kenya</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <span>📧</span>
+                            <span>gitaumarggy@gmail.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <span>📱</span>
+                            <span>+254 742617804</span>
+                        </div>
+                        <div class="contact-item">
+                            <span>🌍</span>
+                            <span>Nairobi, Kenya</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="floating-btn" onclick="switchTab('checkin')" title="Quick Check-in">+</button>
+
+    <script src="script.js"></script>
+    </body>
+    
